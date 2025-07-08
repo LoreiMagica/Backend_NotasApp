@@ -4,8 +4,8 @@ import { UpdateNotaDto } from './dto/updateNotas.dto';
 export declare class NotasController {
     private notasService;
     constructor(notasService: NotasService);
-    crear(dto: CreateNotaDto): Promise<import("./nota.entity").Nota>;
-    obtenerPorUsuario(usuarioId: string): Promise<import("./nota.entity").Nota[]>;
+    crear(dto: CreateNotaDto, req: any): Promise<import("./nota.entity").Nota>;
+    obtenerPorUsuario(req: any): Promise<import("./nota.entity").Nota[]>;
     actualizar(id: string, dto: UpdateNotaDto): Promise<import("./nota.entity").Nota>;
     borrar(id: string): Promise<{
         mensaje: string;
