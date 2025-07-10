@@ -11,7 +11,7 @@ export class Usuario {
 
   //Nombre de usuario que se utilizará para iniciar sesión
   @Column()
-  nombre: string;
+  usuario: string;
 
   //Contraseña que se utilizará para iniciar sesión
   @Column()

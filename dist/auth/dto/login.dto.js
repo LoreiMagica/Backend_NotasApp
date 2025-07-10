@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginDto = void 0;
 class LoginDto {
-    nombre;
+    usuario;
     contrasena;
 }
 exports.LoginDto = LoginDto;

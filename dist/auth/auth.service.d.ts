@@ -6,7 +6,7 @@ export declare class AuthService {
     constructor(usuariosService: UsuariosService, jwtService: JwtService);
     validarUsuario(nombre: string, contrasena: string): Promise<{
         id: number;
-        nombre: string;
+        usuario: string;
         notas: import("../notas/nota.entity").Nota[];
     }>;
     login(nombre: string, contrasena: string): Promise<{

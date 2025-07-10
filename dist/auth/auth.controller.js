@@ -22,7 +22,7 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     login(dto) {
-        return this.authService.login(dto.nombre, dto.contrasena);
+        return this.authService.login(dto.usuario, dto.contrasena);
     }
 };
 exports.AuthController = AuthController;
