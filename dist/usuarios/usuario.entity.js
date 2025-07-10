@@ -14,7 +14,7 @@ const typeorm_1 = require("typeorm");
 const nota_entity_1 = require("../notas/nota.entity");
 let Usuario = class Usuario {
     id;
-    nombre;
+    usuario;
     contrasena;
     notas;
 };
@@ -26,7 +26,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Usuario.prototype, "nombre", void 0);
+], Usuario.prototype, "usuario", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)

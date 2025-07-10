@@ -9,6 +9,6 @@ export class AuthController {
 
   @Post('login')
   login(@Body() dto: LoginDto) {
-    return this.authService.login(dto.nombre, dto.contrasena); //Envía el usuario y contraseña introdudos al servicio de login
+    return this.authService.login(dto.usuario, dto.contrasena); //Envía el usuario y contraseña introdudos al servicio de login
   }
 }

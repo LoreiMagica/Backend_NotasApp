@@ -24,12 +24,12 @@ let UsuariosService = class UsuariosService {
         this.usuariosRepo = usuariosRepo;
     }
     async crearUsuario(dto) {
-        const existe = await this.usuariosRepo.findOneBy({ nombre: dto.nombre });
+        const existe = await this.usuariosRepo.findOneBy({ usuario: dto.nombre });
         if (existe) {
             throw new common_1.ConflictException('Ya existe un usuario con este nombre.');
         }
         const hash = await bcrypt.hash(dto.contrasena, 10);
-        const usuario = this.usuariosRepo.create({ nombre: dto.nombre, contrasena: hash });
+        const usuario = this.usuariosRepo.create({ usuario: dto.nombre, contrasena: hash });
         return this.usuariosRepo.save(usuario);
     }
     async obtenerUsuarioPorId(id) {
@@ -38,11 +38,11 @@ let UsuariosService = class UsuariosService {
             throw new common_1.NotFoundException('Usuario no encontrado');
         return usuario;
     }
-    async obtenerUsuarioPorNombre(nombre) {
-        const usuario = await this.usuariosRepo.findOne({ where: { nombre }, relations: ['notas'] });
-        if (!usuario)
+    async obtenerUsuarioPorNombre(usuario) {
+        const usuarioValidado = await this.usuariosRepo.findOne({ where: { usuario }, relations: ['notas'] });
+        if (!usuarioValidado)
             throw new common_1.NotFoundException('Usuario no encontrado');
-        return usuario;
+        return usuarioValidado;
     }
 };
 exports.UsuariosService = UsuariosService;

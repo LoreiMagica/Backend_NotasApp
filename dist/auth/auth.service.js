@@ -31,7 +31,7 @@ let AuthService = class AuthService {
     }
     async login(nombre, contrasena) {
         const usuario = await this.validarUsuario(nombre, contrasena);
-        const payload = { sub: usuario.id, nombre: usuario.nombre };
+        const payload = { sub: usuario.id, nombre: usuario.usuario };
         return {
             access_token: this.jwtService.sign(payload),
         };

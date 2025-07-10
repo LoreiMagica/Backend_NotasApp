@@ -6,5 +6,5 @@ export declare class UsuariosService {
     constructor(usuariosRepo: Repository<Usuario>);
     crearUsuario(dto: CreateUsuarioDto): Promise<Usuario>;
     obtenerUsuarioPorId(id: number): Promise<Usuario>;
-    obtenerUsuarioPorNombre(nombre: string): Promise<Usuario>;
+    obtenerUsuarioPorNombre(usuario: string): Promise<Usuario>;
 }
