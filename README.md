@@ -1,3 +1,5 @@
+# NotasApp Backend
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
@@ -21,77 +23,238 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Español
+## Prerrequisitos
+**Descargar** e instalar [NodeJS](https://nodejs.org/en/download).
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
+**Descargar** e instalar `NestJS`:
 ```bash
-$ npm install
+npm i -g @nestjs/cli
 ```
 
-## Compile and run the project
-
+**Instalar** las librerías necesarias para ejecutar el programa:
 ```bash
-# development
-$ npm run start
+npm install @nestjs/typeorm typeorm
+npm i bcrypt
+```
+**Descargar** e instalar [MySQL](https://dev.mysql.com/downloads/installer/)*
 
-# watch mode
-$ npm run start:dev
+***Nota:** Para que el backend pueda conectarse a la base de datos **MySQL**, necesita configurarse el usuario y contraseña de esta, así como el puerto.
+Los datos de configuración están en el fichero `"src/app.module.ts"`. Por defecto los datos son:
 
-# production mode
-$ npm run start:prod
+`puerto: 3306, usuario:'root', contraseña: 'Notas_1234',`
+
+`nombre de la base de datos: 'notas_app'`
+
+
+## Instrucciones de uso
+**Importar** el backup de base de datos que viene con el backend: Desde su consola de comandos, moverse a la carpeta raíz de este programa, y ejecutar el comando: 
+```bash
+mysql -u "<TU_USUARIO_BASE_DATOS>" -p "<NOMBRE_TU_BASE_DATOS>" < notas_app.sql
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+**Instalar las dependencias:** Desde su consola de comandos, moverse a la carpeta raíz de este programa, y ejecutar el comando:
+```bash 
+npm install
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+**Finalmente, podrás iniciar el backend:** Desde su consola de comandos, moverse a la carpeta raíz del backend y ejecutar:
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Para un mejor uso de este backend, se recomienda usarlo junto al frontend  en angular [NotasApp](https://github.com/LoreiMagica/NotasApp)
 
-## Resources
+## Operaciones CRUD
+### Usuarios
+**Iniciar sesión** con un usuario (Necesario para hacer operaciones con notas):
 
-Check out a few resources that may come in handy when working with NestJS:
+`POST http://localhost:3000/auth/login`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Cuerpo:
+```JSON
+{
+  "usuario": "Manolo",
+  "contrasena": "Manolo_1234"
+}
+```
+-----
 
-## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Crear** un usuario nuevo:
 
-## Stay in touch
+`POST http://localhost:3000/usuarios`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Cuerpo:
+```JSON
+{
+  "nombre": "Paco",
+  "contrasena": "Paco_1234"
+}
+```
+-----
+
+**Obtener** un usuario específico:  
+`GET http://localhost:3000/usuarios/<ID_USUARIO>`
+
+-----
+
+**Eliminar** un usuario existente (ESTO BORRARÁ TODAS LAS NOTAS DE ESE USUARIO):  
+`DELETE http://localhost:3000/usuarios/<ID_USUARIO>`
+
+-----
+
+
+### Establecer token para trabajar con notas
+En tu aplicación para hacer operaciones CRUD, deberás escribir algo como esto `Authorization: Bareer <TU_TOKEN>`
+Por ejemplo, en Postman, debes dirigirte a Header, y en Key Poner `Authorization`, y en Value `Bareer <TU_TOKEN>`
+
+### Notas (Debes de iniciar sesión con un usuario y establecer el toker)
+**Crear** una nueva nota:  
+`POST http://localhost:3000/notas`  
+Cuerpo:
+```JSON
+    {
+        "titulo": "Postman",
+        "descripcion": "Esta nota ha sido creada desde Postman",
+        "estado": "pendiente"
+    }
+```
+-----
+
+**Obtener** la lista de notas del usuario logeado:  
+`GET http://localhost:3000/notas`  
+
+-----
+**Modificar** una nota específica:  
+`PUT http://localhost:3000/notas/<ID_NOTA>`  
+Cuerpo:
+```JSON
+    {
+        "titulo": "Postman otra vez",
+        "descripcion": "Esta nota ha sido modificada usando Postman otra vez",
+        "estado": "completado"
+    }
+```
+-----
+**Eliminar** una nota existente:  
+`DELETE http://localhost:3000/notas/<ID_NOTA>`
+
+# English 
+
+## Pre-requisites
+**Download** and install [Nodejs](https://nodejs.org/en/download).
+
+**Download** and install `Nestjs`:
+```bash
+npm i -g @nestjs/cli
+```
+
+**Install** the necessary libraries to launch the program:
+```bash
+npm install @nestjs/typeorm typeorm
+npm i bcrypt
+```
+**Download** and install [MySQL](https://dev.mysql.com/downloads/installer/)*
+
+***NOTE:** For the backend to connect to the database **MySQL**, it needs to configure the user and password of this, as well as the port.
+The configuration data are on the `"src/app.module"` file. By default the data are:
+
+`port: 3306, user:'root', password: 'Notas_1234',`
+
+`Database name: 'notas_app'`
+
+## Instructions to use
+**Import** the database backup that comes with the backend: From its command console, move to the root folder of this program, and execute the command:
+```bash
+mysql -u "<YOUR_DATABASE_USER>" -p "<YOUR_DATABASE_NAME>" < notas_app.sql
+```
+
+**Install the dependencies:** from your command console, move to the root folder of this program, and execute the command:
+```bash 
+npm install
+```
+
+**Finally, launch the backend:** from its command console, move to the root folder of the backend and execute: 
+```bash
+npm run start
+```
+
+For better use of this backend, it is recommended to use it next to the border in angular [NotasApp](https://github.com/loreimagica/notasapp)
+
+
+## CRUD operations
+### Users
+**Login** with an user (Neccesary if you want to works with notes):  
+`POST http://localhost:3000/auth/login`  
+Body:
+```JSON
+{
+  "usuario": "Manolo",
+  "contrasena": "Manolo_1234"
+}
+```
+-----
+
+
+**Create** a new user:
+`POST http://localhost:3000/usuarios`
+Body:
+```JSON
+{
+  "nombre": "Paco",
+  "contrasena": "Paco_1234"
+}
+```
+
+**Get** a specific user:  
+`GET http://localhost:3000/usuarios/<ID_USUARIO>`
+
+-----
+
+
+**Delete** a specific user (THIS WILL DELETE ALL THE NOTES FROM THIS USER):  
+`DELETE http://localhost:3000/usuarios/<ID_USUARIO>`
+
+-----
+
+
+### Set the user toker for work with notes
+In your application to do CRUD operations, you must write something like this `Authorization: Bareer <YOUR_TOKEN>`
+For example, in Postman, you must go to Header, and in Key write `Authorization`, and in Value write `Bareer <YOUR_TOKEN>`
+
+### Notes (You must log in with a user and set the token)
+**Create** a new note:  
+`POST http://localhost:3000/notas`  
+Body:
+```JSON
+    {
+        "titulo": "Postman",
+        "descripcion": "This note have been created from postman",
+        "estado": "pendiente"
+    }
+```
+-----
+
+**Get** rhe full note list from the logged user:  
+`GET http://localhost:3000/notas`
+
+-----
+
+**Modify** specific note:  
+`PUT http://localhost:3000/notas/<ID_NOTE>`  
+Body:
+```JSON
+    {
+        "titulo": "Postman another time",
+        "descripcion": "This note have beed modified from postman another time",
+        "estado": "completado"
+    }
+```
+-----
+
+**Delete** existent note:  
+`DELETE http://localhost:3000/notas/<ID_NOTE>`
 
 ## License
 

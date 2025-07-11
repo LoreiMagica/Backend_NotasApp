@@ -7,4 +7,5 @@ export declare class UsuariosService {
     crearUsuario(dto: CreateUsuarioDto): Promise<Usuario>;
     obtenerUsuarioPorId(id: number): Promise<Usuario>;
     obtenerUsuarioPorNombre(usuario: string): Promise<Usuario>;
+    eliminarUsuario(id: number): Promise<boolean>;
 }

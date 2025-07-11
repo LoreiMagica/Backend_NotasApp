@@ -44,6 +44,10 @@ let UsuariosService = class UsuariosService {
             throw new common_1.NotFoundException('Usuario no encontrado');
         return usuarioValidado;
     }
+    async eliminarUsuario(id) {
+        const resultado = await this.usuariosRepo.delete(id);
+        return !!resultado.affected && resultado.affected > 0;
+    }
 };
 exports.UsuariosService = UsuariosService;
 exports.UsuariosService = UsuariosService = __decorate([

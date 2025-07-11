@@ -38,4 +38,9 @@ export class UsuariosService {
     if (!usuarioValidado) throw new NotFoundException('Usuario no encontrado'); //Y si no lo encuentra, avisa al usuario
     return usuarioValidado; //Pero si lo encuentra, lo devuelve
   }
+
+  async eliminarUsuario(id: number): Promise<boolean> {
+    const resultado = await this.usuariosRepo.delete(id); //Busca el usuario por su id para eliminarlo
+      return !!resultado.affected && resultado.affected > 0; //Devuelve true si se eliminó un usuario
+  }
 }
