@@ -48,6 +48,8 @@ Los datos de configuración están en el fichero `"src/app.module.ts"`. Por defe
 
 
 ## Instrucciones de uso
+**Descargar** este proyecto [Backend NotasApp](https://github.com/LoreiMagica/Backend_NotasApp/archive/refs/heads/main.zip)
+
 **Importar** el backup de base de datos que viene con el backend: Desde su consola de comandos, moverse a la carpeta raíz de este programa, y ejecutar el comando: 
 ```bash
 mysql -u "<TU_USUARIO_BASE_DATOS>" -p "<NOMBRE_TU_BASE_DATOS>" < notas_app.sql
@@ -165,6 +167,8 @@ The configuration data are on the `"src/app.module"` file. By default the data a
 `Database name: 'notas_app'`
 
 ## Instructions to use
+**Download** this project [Backend NotasApp](https://github.com/LoreiMagica/Backend_NotasApp/archive/refs/heads/main.zip)
+
 **Import** the database backup that comes with the backend: From its command console, move to the root folder of this program, and execute the command:
 ```bash
 mysql -u "<YOUR_DATABASE_USER>" -p "<YOUR_DATABASE_NAME>" < notas_app.sql
